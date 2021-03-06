@@ -1,0 +1,17 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.deployment.name | quote }}
+  annotations:
+    description: Exposes and load balances the application pods
+  labels:
+    app: {{ .Values.deployment.name | quote }}
+spec:
+  ports:
+    - name: server-port
+      port: {{ .Values.deployment.serverPort }}
+      targetPort: {{ .Values.deployment.serverPort }}
+  selector:
+    app: {{ .Values.deployment.name | quote }}

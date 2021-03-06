@@ -1,0 +1,14 @@
+---
+
+deployment:
+  name: encryption-service
+  image: bilalcaliskan/encryption-service:1.0.8
+  replicaCount: 1
+  serverPort: 8085
+  managementEndpoint: /health/ping
+  ingressEndpoint: /encryption-service
+  environment:
+    timezone: Europe/Istanbul
+
+ingress:
+  enabled: false

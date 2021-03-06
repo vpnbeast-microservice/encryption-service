@@ -1,0 +1,54 @@
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Values.deployment.name | quote }}
+  labels:
+    app: {{ .Values.deployment.name | quote }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name | quote }}
+  template:
+    metadata:
+      name: {{ .Values.deployment.name | quote }}
+      labels:
+        app: {{ .Values.deployment.name | quote }}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: {{ .Values.deployment.name | quote }}
+          image: {{ .Values.deployment.image | quote }}
+          env:
+            - name: PORT
+              value: {{ .Values.deployment.serverPort | quote }}
+            - name: TZ
+              value: {{ .Values.deployment.environment.timezone | quote }}
+          ports:
+            - containerPort: {{ .Values.deployment.serverPort }}
+              name: server-port
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: {{ .Values.deployment.managementEndpoint }}
+              port: {{ .Values.deployment.serverPort }}
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: {{ .Values.deployment.managementEndpoint }}
+              port: {{ .Values.deployment.serverPort }}
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
