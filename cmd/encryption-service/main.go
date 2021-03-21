@@ -2,6 +2,7 @@ package main
 
 import (
 	"encryption-service/pkg/config"
+	"encryption-service/pkg/metrics"
 	"encryption-service/pkg/web"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -21,6 +22,7 @@ func init() {
 
 func main() {
 	router := mux.NewRouter()
+	go metrics.RunMetricsServer(router)
 	server := web.InitServer(router, fmt.Sprintf(":%d", port), time.Duration(int32(writeTimeoutSeconds)) * time.Second,
 		time.Duration(int32(readTimeoutSeconds)) * time.Second)
 	log.Printf("Server is listening on port %d!", port)
