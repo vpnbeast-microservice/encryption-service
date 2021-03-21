@@ -5,9 +5,13 @@ import (
 )
 
 func Compare(plainText string, encryptedText string) bool {
+	var isEqual bool
 	decryptedText := decryption.Decrypt(encryptedText)
 	if plainText == decryptedText {
-		return true
+		isEqual = true
+	} else {
+		isEqual = false
 	}
-	return false
+
+	return isEqual
 }
