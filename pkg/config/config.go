@@ -1,10 +1,17 @@
 package config
 
 import (
-	"log"
+	"encryption-service/pkg/logging"
+	"go.uber.org/zap"
 	"os"
 	"strconv"
 )
+
+var logger *zap.Logger
+
+func init() {
+	logger = logging.GetLogger()
+}
 
 func getStringEnv(key, defaultValue string) string {
 	value := os.Getenv(key)
@@ -25,7 +32,8 @@ func GetIntEnv(key string, defaultValue int) int {
 func convertStringToInt(s string) int {
 	i, err := strconv.Atoi(s)
 	if err != nil {
-		log.Printf("An error occured while converting %s to int. Setting it as zero.", s)
+		logger.Warn("an error occured while converting from string to int. Setting it as zero",
+			zap.String("error", err.Error()))
 		i = 0
 	}
 	return i

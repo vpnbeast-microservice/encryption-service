@@ -5,8 +5,15 @@ import (
 	"crypto/cipher"
 	"encoding/hex"
 	"encryption-service/pkg/config"
-	"log"
+	"encryption-service/pkg/logging"
+	"go.uber.org/zap"
 )
+
+var logger *zap.Logger
+
+func init() {
+	logger = logging.GetLogger()
+}
 
 func Decrypt(encryptedText string) (decryptedText string) {
 	keyString := hex.EncodeToString([]byte(config.GetSecret()))
@@ -16,14 +23,15 @@ func Decrypt(encryptedText string) (decryptedText string) {
 	//Create a new Cipher Block from the key
 	block, err := aes.NewCipher(keyBytes)
 	if err != nil {
-		log.Println(err.Error())
+		logger.Error("an error occured while creating a new cipher block from key, returning",
+			zap.ByteString("keyBytes", keyBytes), zap.String("error", err.Error()))
 		return
 	}
 
 	//Create a new GCM
 	aesGCM, err := cipher.NewGCM(block)
 	if err != nil {
-		log.Println(err.Error())
+		logger.Error("an error occured while creating a new GCM, returning", zap.String("error", err.Error()))
 		return
 	}
 

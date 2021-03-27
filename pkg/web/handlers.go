@@ -3,21 +3,28 @@ package web
 import (
 	"encoding/json"
 	"encryption-service/pkg/encryption"
+	"encryption-service/pkg/logging"
 	"encryption-service/pkg/validation"
 	"errors"
-	"log"
+	"go.uber.org/zap"
 	"net/http"
 )
+
+var logger *zap.Logger
+
+func init() {
+	logger = logging.GetLogger()
+}
 
 func encryptHandler(w http.ResponseWriter, r *http.Request) {
 	var request encryptRequest
 	err := decodeJSONBody(w, r, &request)
 	if err != nil {
+		logger.Error("an error occured while decoding json body", zap.String("error", err.Error()))
 		var mr *malformedRequest
 		if errors.As(err, &mr) {
 			http.Error(w, mr.msg, mr.status)
 		} else {
-			log.Println(err.Error())
 			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		}
 		return
@@ -31,6 +38,7 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 
 	responseBytes, err := json.Marshal(response)
 	if err != nil {
+		logger.Error("an error occured while marshaling response", zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -38,6 +46,7 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	_, err = w.Write(responseBytes)
 	if err != nil {
+		logger.Error("an error occured while writing response", zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -47,11 +56,11 @@ func checkHandler(w http.ResponseWriter, r *http.Request) {
 	var request checkRequest
 	err := decodeJSONBody(w, r, &request)
 	if err != nil {
+		logger.Error("an error occured while decoding json body", zap.String("error", err.Error()))
 		var mr *malformedRequest
 		if errors.As(err, &mr) {
 			http.Error(w, mr.msg, mr.status)
 		} else {
-			log.Println(err.Error())
 			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		}
 		return
@@ -65,6 +74,7 @@ func checkHandler(w http.ResponseWriter, r *http.Request) {
 
 	responseBytes, err := json.Marshal(response)
 	if err != nil {
+		logger.Error("an error occured while marshaling response", zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -72,6 +82,7 @@ func checkHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	_, err = w.Write(responseBytes)
 	if err != nil {
+		logger.Error("an error occured while writing response", zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -80,6 +91,7 @@ func checkHandler(w http.ResponseWriter, r *http.Request) {
 func pingHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := w.Write([]byte("pong"))
 	if err != nil {
+		logger.Error("an error occured while writing response", zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
