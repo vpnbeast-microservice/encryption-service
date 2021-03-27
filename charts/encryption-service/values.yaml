@@ -2,7 +2,7 @@
 
 deployment:
   name: encryption-service
-  image: bilalcaliskan/encryption-service:1.0.11
+  image: bilalcaliskan/encryption-service:1.0.12
   replicaCount: 1
   serverPort: 8085
   managementEndpoint: /health/ping
