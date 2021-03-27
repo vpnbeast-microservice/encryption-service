@@ -8,7 +8,7 @@ function git_global_settings() {
 function git_commit_and_push() {
     git --no-pager diff
     git add --all
-    git commit -am "[ci-skip] version ${RELEASE_VERSION}.RELEASE"
+    git commit -am "[ci-skip] version v${RELEASE_VERSION} released"
     git tag -a "v${RELEASE_VERSION}" -m "v${RELEASE_VERSION} tagged"
     git status
     git push --force --follow-tags ${PUSH_URL} HEAD:${BRANCH}
