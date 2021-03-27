@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function git_global_settings() {
-    git config --global user.name ${USERNAME}
-    git config --global user.email ${EMAIL}
+    git config --global user.name "${USERNAME}"
+    git config --global user.email "${EMAIL}"
 }
 
 function git_commit_and_push() {
@@ -11,7 +11,7 @@ function git_commit_and_push() {
     git commit -am "[ci-skip] version v${RELEASE_VERSION} released"
     git tag -a "v${RELEASE_VERSION}" -m "v${RELEASE_VERSION} tagged"
     git status
-    git push --force --follow-tags ${PUSH_URL} HEAD:${BRANCH}
+    git push --force --follow-tags "${PUSH_URL}" HEAD:"${BRANCH}"
 }
 
 set -ex
