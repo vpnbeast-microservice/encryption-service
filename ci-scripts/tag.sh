@@ -13,7 +13,7 @@ function increment_minor_version() {
 function set_version() {
     sed -i "s/${1}/${2}/g" version.properties
 }
-ö
+
 function set_chart_version() {
     sed -i "s/${1}/${2}/g" charts/"${CHART_NAME}"/Chart.yaml
     sed -i "s/${1}/${2}/g" charts/"${CHART_NAME}"/values.yaml
