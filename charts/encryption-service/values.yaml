@@ -2,7 +2,7 @@
 
 deployment:
   name: encryption-service
-  image: bilalcaliskan/encryption-service:1.0.15
+  image: vpnbeast/encryption-service:1.0.15
   replicaCount: 1
   serverPort: 8085
   managementEndpoint: /health/ping
