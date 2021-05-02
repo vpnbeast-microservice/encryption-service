@@ -10,6 +10,12 @@ import (
 	"time"
 )
 
+var (
+	metricsPort = 8086
+	writeTimeoutSeconds = 10
+	readTimeoutSeconds = 10
+)
+
 func TestRunMetricsServer(t *testing.T) {
 	errChan := make(chan error, 1)
 
