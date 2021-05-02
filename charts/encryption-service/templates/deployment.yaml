@@ -32,6 +32,8 @@ spec:
           ports:
             - containerPort: {{ .Values.deployment.serverPort }}
               name: server-port
+            - containerPort: { { .Values.deployment.metricsPort } }
+              name: metrics-port
           livenessProbe:
             failureThreshold: 3
             httpGet:

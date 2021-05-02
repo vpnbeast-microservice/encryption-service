@@ -5,6 +5,7 @@ deployment:
   image: vpnbeast/encryption-service:1.0.17
   replicaCount: 1
   serverPort: 8085
+  metricsPort: 8086
   managementEndpoint: /health/ping
   ingressEndpoint: /encryption-service
   environment:

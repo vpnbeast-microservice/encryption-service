@@ -5,32 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang/gddo/httputil/header"
-	"github.com/gorilla/mux"
 	"io"
 	"net/http"
 	"strings"
-	"time"
 )
-
-func registerHandlers(router *mux.Router) {
-	encryptHandler := http.HandlerFunc(encryptHandler)
-	checkHandler := http.HandlerFunc(checkHandler)
-	pingHandler := http.HandlerFunc(pingHandler)
-	router.HandleFunc("/encryption-controller/encrypt", encryptHandler).Methods("POST").Schemes("http").Name("encrypt")
-	router.HandleFunc("/encryption-controller/check", checkHandler).Methods("POST").Schemes("http").Name("check")
-	router.HandleFunc("/health/ping", pingHandler).Methods("GET").Schemes("http").Name("ping")
-	// router.Use(loggingMiddleware)
-}
-
-func InitServer(router *mux.Router, addr string, writeTimeout time.Duration, readTimeout time.Duration) *http.Server {
-	registerHandlers(router)
-	return &http.Server{
-		Handler: router,
-		Addr: addr,
-		WriteTimeout: writeTimeout,
-		ReadTimeout: readTimeout,
-	}
-}
 
 func decodeJSONBody(w http.ResponseWriter, r *http.Request, dst interface{}) error {
 	// If the Content-Type header is present, check that it has the value

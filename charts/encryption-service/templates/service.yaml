@@ -13,5 +13,8 @@ spec:
     - name: server-port
       port: {{ .Values.deployment.serverPort }}
       targetPort: {{ .Values.deployment.serverPort }}
+    - name: metrics-port
+      port: { { .Values.deployment.metricsPort } }
+      targetPort: { { .Values.deployment.metricsPort } }
   selector:
     app: {{ .Values.deployment.name | quote }}

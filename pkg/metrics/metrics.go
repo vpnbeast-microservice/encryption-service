@@ -1,7 +1,6 @@
 package metrics
 
 import (
-	"encryption-service/pkg/config"
 	"encryption-service/pkg/logging"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -13,21 +12,17 @@ import (
 
 var (
 	logger *zap.Logger
-	metricsPort, writeTimeoutSeconds, readTimeoutSeconds int
 )
 
 func init() {
 	logger = logging.GetLogger()
-	metricsPort = config.GetIntEnv("METRICS_PORT", 3001)
-	writeTimeoutSeconds = config.GetIntEnv("WRITE_TIMEOUT_SECONDS", 10)
-	readTimeoutSeconds = config.GetIntEnv("READ_TIMEOUT_SECONDS", 10)
 }
 
 // TODO: Generate custom metrics, check below:
 // https://prometheus.io/docs/guides/go-application/
 // https://www.robustperception.io/prometheus-middleware-for-gorilla-mux
 
-func RunMetricsServer(router *mux.Router) {
+func RunMetricsServer(router *mux.Router, metricsPort, writeTimeoutSeconds, readTimeoutSeconds int) {
 	metricServer := &http.Server{
 		Handler: router,
 		Addr: fmt.Sprintf(":%d", metricsPort),
@@ -35,6 +30,6 @@ func RunMetricsServer(router *mux.Router) {
 		ReadTimeout:  time.Duration(int32(readTimeoutSeconds)) * time.Second,
 	}
 	router.Handle("/metrics", promhttp.Handler())
-	logger.Info("metric server is up and running", zap.Int("port", metricsPort))
+	logger.Info("metric server is up and running", zap.Int("metricsPort", metricsPort))
 	panic(metricServer.ListenAndServe())
 }
