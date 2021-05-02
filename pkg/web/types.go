@@ -19,6 +19,15 @@ type encryptResponse struct {
 	Output string `json:"output"`
 }
 
+type decryptRequest struct {
+	EncryptedText string `json:"encryptedText"`
+}
+
+type decryptResponse struct {
+	Tag    string `json:"tag"`
+	Output string `json:"output"`
+}
+
 type malformedRequest struct {
 	status int
 	msg    string

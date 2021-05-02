@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"encryption-service/pkg/decryption"
 	"encryption-service/pkg/encryption"
 	"encryption-service/pkg/logging"
 	"encryption-service/pkg/validation"
@@ -34,6 +35,42 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 	response := encryptResponse{
 		Tag:    "encrypt",
 		Output: encryptedText,
+	}
+
+	responseBytes, err := json.Marshal(response)
+	if err != nil {
+		logger.Error("an error occured while marshaling response", zap.String("error", err.Error()))
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	_, err = w.Write(responseBytes)
+	if err != nil {
+		logger.Error("an error occured while writing response", zap.String("error", err.Error()))
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func decryptHandler(w http.ResponseWriter, r *http.Request) {
+	var request decryptRequest
+	err := decodeJSONBody(w, r, &request)
+	if err != nil {
+		logger.Error("an error occured while decoding json body", zap.String("error", err.Error()))
+		var mr *malformedRequest
+		if errors.As(err, &mr) {
+			http.Error(w, mr.msg, mr.status)
+		} else {
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		}
+		return
+	}
+
+	decryptedText := decryption.Decrypt(request.EncryptedText)
+	response := decryptResponse{
+		Tag:    "decrypt",
+		Output: decryptedText,
 	}
 
 	responseBytes, err := json.Marshal(response)
