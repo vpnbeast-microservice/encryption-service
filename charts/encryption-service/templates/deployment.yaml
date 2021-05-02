@@ -25,8 +25,14 @@ spec:
         - name: {{ .Values.deployment.name | quote }}
           image: {{ .Values.deployment.image | quote }}
           env:
-            - name: PORT
-              value: {{ .Values.deployment.serverPort | quote }}
+            - name: SERVER_PORT
+              value: {{ .Values.deployment.serverPort }}
+            - name: METRICS_PORT
+              value: { { .Values.deployment.metricsPort } }
+            - name: READ_TIMEOUT_SECONDS
+              value: {{ .Values.deployment.environment.readTimeoutSeconds }}
+            - name: WRITE_TIMEOUT_SECONDS
+              value: { { .Values.deployment.environment.writeTimeoutSeconds } }
             - name: TZ
               value: {{ .Values.deployment.environment.timezone | quote }}
           ports:

@@ -10,6 +10,8 @@ deployment:
   ingressEndpoint: /encryption-service
   environment:
     timezone: Europe/Istanbul
+    readTimeoutSeconds: 10
+    writeTimeoutSeconds: 10
 
 ingress:
   enabled: false
