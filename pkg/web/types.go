@@ -1,13 +1,13 @@
 package web
 
 type checkRequest struct {
-	PlainText string `json:"plainText"`
+	PlainText     string `json:"plainText"`
 	EncryptedText string `json:"encryptedText"`
 }
 
 type checkResponse struct {
-	Tag string `json:"tag"`
-	Status bool `json:"status"`
+	Tag    string `json:"tag"`
+	Status bool   `json:"status"`
 }
 
 type encryptRequest struct {

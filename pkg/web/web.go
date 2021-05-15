@@ -26,8 +26,8 @@ func registerHandlers(router *mux.Router) {
 func InitServer(router *mux.Router, serverPort, writeTimeoutSeconds, readTimeoutSeconds int) *http.Server {
 	registerHandlers(router)
 	return &http.Server{
-		Handler: router,
-		Addr: fmt.Sprintf(":%d", serverPort),
+		Handler:      router,
+		Addr:         fmt.Sprintf(":%d", serverPort),
 		WriteTimeout: time.Duration(int32(writeTimeoutSeconds)) * time.Second,
 		ReadTimeout:  time.Duration(int32(readTimeoutSeconds)) * time.Second,
 	}

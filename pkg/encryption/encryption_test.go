@@ -11,7 +11,7 @@ import (
 )
 
 func TestEncrypt(t *testing.T) {
-	cases := []struct{
+	cases := []struct {
 		caseName, clearText string
 	}{
 		{"case1", "admin"},

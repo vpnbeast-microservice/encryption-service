@@ -24,8 +24,8 @@ func init() {
 
 func RunMetricsServer(router *mux.Router, metricsPort, writeTimeoutSeconds, readTimeoutSeconds int) {
 	metricServer := &http.Server{
-		Handler: router,
-		Addr: fmt.Sprintf(":%d", metricsPort),
+		Handler:      router,
+		Addr:         fmt.Sprintf(":%d", metricsPort),
 		WriteTimeout: time.Duration(int32(writeTimeoutSeconds)) * time.Second,
 		ReadTimeout:  time.Duration(int32(readTimeoutSeconds)) * time.Second,
 	}

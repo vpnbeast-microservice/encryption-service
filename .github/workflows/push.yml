@@ -17,9 +17,31 @@ jobs:
         with:
           go-version: 1.16.x
       - name: Lint
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.26.0
-          golangci-lint run --timeout 2m0s
+        run: make lint
+
+  vet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Vet
+        run: make vet
+
+  ineffassign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Lint
+        run: make ineffassign
 
   test:
     strategy:
@@ -63,6 +85,8 @@ jobs:
   build:
     needs:
       - lint
+      - vet
+      - ineffassign
       - test
       - test-cache
     strategy:
@@ -87,6 +111,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Format
+        run: make fmt
       - name: Set tag.sh executable
         run: chmod +x ci-scripts/tag.sh
       - name: Run tag.sh

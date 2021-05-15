@@ -11,7 +11,7 @@ import (
 
 var (
 	serverPort, metricsPort, writeTimeoutSeconds, readTimeoutSeconds int
-	logger *zap.Logger
+	logger                                                           *zap.Logger
 )
 
 func init() {

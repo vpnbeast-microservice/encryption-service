@@ -9,7 +9,7 @@ import (
 )
 
 func TestDecrypt(t *testing.T) {
-	cases := []struct{
+	cases := []struct {
 		caseName, encryptedText, decryptedText string
 	}{
 		{"case1", "6ac0c4f09977fd57e6d8a4d6af3731e38e9a1363470e8e5ca338c0ca1bc7183980",
