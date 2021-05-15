@@ -22,6 +22,7 @@ func init() {
 // https://prometheus.io/docs/guides/go-application/
 // https://www.robustperception.io/prometheus-middleware-for-gorilla-mux
 
+// RunMetricsServer provides an endpoint, exports prometheus metrics using prometheus client golang
 func RunMetricsServer(router *mux.Router, metricsPort, writeTimeoutSeconds, readTimeoutSeconds int) {
 	metricServer := &http.Server{
 		Handler:      router,

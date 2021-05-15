@@ -15,6 +15,7 @@ func init() {
 	logger = logging.GetLogger()
 }
 
+// Decrypt decrypts specified string with secret
 func Decrypt(encryptedText string) (decryptedText string) {
 	keyString := hex.EncodeToString([]byte(config.GetSecret()))
 	keyBytes, _ := hex.DecodeString(keyString)
@@ -23,7 +24,7 @@ func Decrypt(encryptedText string) (decryptedText string) {
 	//Create a new Cipher Block from the key
 	block, err := aes.NewCipher(keyBytes)
 	if err != nil {
-		logger.Error("an error occured while creating a new cipher block from key, returning",
+		logger.Error("an error occurred while creating a new cipher block from key, returning",
 			zap.ByteString("keyBytes", keyBytes), zap.String("error", err.Error()))
 		return
 	}
@@ -31,7 +32,7 @@ func Decrypt(encryptedText string) (decryptedText string) {
 	//Create a new GCM
 	aesGCM, err := cipher.NewGCM(block)
 	if err != nil {
-		logger.Error("an error occured while creating a new GCM, returning", zap.String("error", err.Error()))
+		logger.Error("an error occurred while creating a new GCM, returning", zap.String("error", err.Error()))
 		return
 	}
 

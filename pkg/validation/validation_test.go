@@ -21,10 +21,10 @@ func TestCompare(t *testing.T) {
 			if tc.decryptedText == decryptedText {
 				t.Log("successful operation")
 				return
-			} else {
-				t.Errorf("test failed. required=%v, got=%v\n", tc.decryptedText, decryptedText)
-				return
 			}
+
+			t.Errorf("test failed. required=%v, got=%v\n", tc.decryptedText, decryptedText)
+			return
 		})
 	}
 }

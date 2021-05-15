@@ -18,6 +18,7 @@ func init() {
 	logger = logging.GetLogger()
 }
 
+// Encrypt encrypts the string with specified secret
 func Encrypt(stringToEncrypt string) (encryptedString string) {
 	// Since the key is in string, we need to convert decode it to bytes
 	keyString := hex.EncodeToString([]byte(config.GetSecret()))
@@ -27,7 +28,7 @@ func Encrypt(stringToEncrypt string) (encryptedString string) {
 	// Create a new Cipher Block from the key
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		logger.Error("an error occured while creating a new cipher block from key, returning",
+		logger.Error("an error occurred while creating a new cipher block from key, returning",
 			zap.ByteString("keyBytes", key), zap.String("error", err.Error()))
 		return
 	}
@@ -36,14 +37,14 @@ func Encrypt(stringToEncrypt string) (encryptedString string) {
 	// https://golang.org/pkg/crypto/cipher/#NewGCM
 	aesGCM, err := cipher.NewGCM(block)
 	if err != nil {
-		logger.Error("an error occured while creating a new GCM, returning", zap.String("error", err.Error()))
+		logger.Error("an error occurred while creating a new GCM, returning", zap.String("error", err.Error()))
 		return
 	}
 
 	//Create a nonce. Nonce should be from GCM
 	nonce := make([]byte, aesGCM.NonceSize())
 	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
-		logger.Error("an error occured while creating a nonce, returning", zap.String("error", err.Error()))
+		logger.Error("an error occurred while creating a nonce, returning", zap.String("error", err.Error()))
 		return
 	}
 
