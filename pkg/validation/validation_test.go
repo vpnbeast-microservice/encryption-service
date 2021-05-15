@@ -18,13 +18,12 @@ func TestCompare(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(tc.caseName, func(t *testing.T) {
 			decryptedText := decryption.Decrypt(tc.encryptedText)
-			if tc.decryptedText == decryptedText {
-				t.Log("successful operation")
+			if tc.decryptedText != decryptedText {
+				t.Errorf("test failed. required=%v, got=%v\n", tc.decryptedText, decryptedText)
 				return
 			}
 
-			t.Errorf("test failed. required=%v, got=%v\n", tc.decryptedText, decryptedText)
-			return
+			t.Log("successful operation")
 		})
 	}
 }
