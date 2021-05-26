@@ -4,18 +4,11 @@ import (
 	"encoding/json"
 	"encryption-service/pkg/decryption"
 	"encryption-service/pkg/encryption"
-	"encryption-service/pkg/logging"
 	"encryption-service/pkg/validation"
 	"errors"
 	"go.uber.org/zap"
 	"net/http"
 )
-
-var logger *zap.Logger
-
-func init() {
-	logger = logging.GetLogger()
-}
 
 func encryptHandler(w http.ResponseWriter, r *http.Request) {
 	var request encryptRequest

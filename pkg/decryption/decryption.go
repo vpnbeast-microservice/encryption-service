@@ -4,20 +4,24 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/hex"
-	"encryption-service/pkg/config"
 	"encryption-service/pkg/logging"
+	"encryption-service/pkg/options"
 	"go.uber.org/zap"
 )
 
-var logger *zap.Logger
+var (
+	logger *zap.Logger
+	opts   *options.EncryptionServiceOptions
+)
 
 func init() {
 	logger = logging.GetLogger()
+	opts = options.GetEncryptionServiceOptions()
 }
 
 // Decrypt decrypts specified string with secret
 func Decrypt(encryptedText string) (decryptedText string) {
-	keyString := hex.EncodeToString([]byte(config.GetSecret()))
+	keyString := hex.EncodeToString([]byte(opts.Secret))
 	keyBytes, _ := hex.DecodeString(keyString)
 	encryptedTextBytes, _ := hex.DecodeString(encryptedText)
 

@@ -5,23 +5,27 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/hex"
-	"encryption-service/pkg/config"
 	"encryption-service/pkg/logging"
+	"encryption-service/pkg/options"
 	"fmt"
 	"go.uber.org/zap"
 	"io"
 )
 
-var logger *zap.Logger
+var (
+	logger *zap.Logger
+	opts   *options.EncryptionServiceOptions
+)
 
 func init() {
 	logger = logging.GetLogger()
+	opts = options.GetEncryptionServiceOptions()
 }
 
 // Encrypt encrypts the string with specified secret
 func Encrypt(stringToEncrypt string) (encryptedString string) {
 	// Since the key is in string, we need to convert decode it to bytes
-	keyString := hex.EncodeToString([]byte(config.GetSecret()))
+	keyString := hex.EncodeToString([]byte(opts.Secret))
 	key, _ := hex.DecodeString(keyString)
 	plaintext := []byte(stringToEncrypt)
 

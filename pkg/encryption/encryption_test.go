@@ -5,7 +5,6 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/hex"
-	"encryption-service/pkg/config"
 	"io"
 	"testing"
 )
@@ -20,7 +19,7 @@ func TestEncrypt(t *testing.T) {
 
 	for _, tc := range cases {
 		t.Run(tc.caseName, func(t *testing.T) {
-			keyString := hex.EncodeToString([]byte(config.GetSecret()))
+			keyString := hex.EncodeToString([]byte(opts.Secret))
 			key, _ := hex.DecodeString(keyString)
 			plaintext := []byte(tc.clearText)
 

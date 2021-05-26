@@ -1,11 +1,24 @@
 package web
 
 import (
+	"encryption-service/pkg/logging"
+	"encryption-service/pkg/options"
 	"fmt"
 	"github.com/gorilla/mux"
+	"go.uber.org/zap"
 	"net/http"
 	"time"
 )
+
+var (
+	logger *zap.Logger
+	opts   *options.EncryptionServiceOptions
+)
+
+func init() {
+	logger = logging.GetLogger()
+	opts = options.GetEncryptionServiceOptions()
+}
 
 func registerHandlers(router *mux.Router) {
 	encryptHandler := http.HandlerFunc(encryptHandler)
@@ -24,12 +37,12 @@ func registerHandlers(router *mux.Router) {
 }
 
 // InitServer initializes *http.Server with provided parameters
-func InitServer(router *mux.Router, serverPort, writeTimeoutSeconds, readTimeoutSeconds int) *http.Server {
+func InitServer(router *mux.Router) *http.Server {
 	registerHandlers(router)
 	return &http.Server{
 		Handler:      router,
-		Addr:         fmt.Sprintf(":%d", serverPort),
-		WriteTimeout: time.Duration(int32(writeTimeoutSeconds)) * time.Second,
-		ReadTimeout:  time.Duration(int32(readTimeoutSeconds)) * time.Second,
+		Addr:         fmt.Sprintf(":%d", opts.ServerPort),
+		WriteTimeout: time.Duration(int32(opts.WriteTimeoutSeconds)) * time.Second,
+		ReadTimeout:  time.Duration(int32(opts.ReadTimeoutSeconds)) * time.Second,
 	}
 }
