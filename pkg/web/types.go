@@ -6,7 +6,6 @@ type checkRequest struct {
 }
 
 type checkResponse struct {
-	Tag    string `json:"tag"`
 	Status bool   `json:"status"`
 }
 
@@ -15,7 +14,6 @@ type encryptRequest struct {
 }
 
 type encryptResponse struct {
-	Tag    string `json:"tag"`
 	Output string `json:"output"`
 }
 
@@ -24,7 +22,6 @@ type decryptRequest struct {
 }
 
 type decryptResponse struct {
-	Tag    string `json:"tag"`
 	Output string `json:"output"`
 }
 

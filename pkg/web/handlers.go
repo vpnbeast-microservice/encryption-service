@@ -26,7 +26,6 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 
 	encryptedText := encryption.Encrypt(request.PlainText)
 	response := encryptResponse{
-		Tag:    "encrypt",
 		Output: encryptedText,
 	}
 
@@ -62,7 +61,6 @@ func decryptHandler(w http.ResponseWriter, r *http.Request) {
 
 	decryptedText := decryption.Decrypt(request.EncryptedText)
 	response := decryptResponse{
-		Tag:    "decrypt",
 		Output: decryptedText,
 	}
 
@@ -98,7 +96,6 @@ func checkHandler(w http.ResponseWriter, r *http.Request) {
 
 	isMatched := validation.Compare(request.PlainText, request.EncryptedText)
 	response := checkResponse{
-		Tag:    "check",
 		Status: isMatched,
 	}
 
