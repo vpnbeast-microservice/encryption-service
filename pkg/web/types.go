@@ -6,7 +6,7 @@ type checkRequest struct {
 }
 
 type checkResponse struct {
-	Status bool   `json:"status"`
+	Status bool `json:"status"`
 }
 
 type encryptRequest struct {
