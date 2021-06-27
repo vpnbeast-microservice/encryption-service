@@ -9,12 +9,9 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
+  {{- if .Values.ingress.rules }}
   rules:
-  - http:
-      paths:
-      - path: /encryption-service(/|$)(.*)
-        backend:
-          serviceName: {{ .Values.deployment.name | quote }}
-          servicePort: {{ .Values.deployment.serverPort }}
+  {{- toYaml .Values.ingress.rules | nindent 4 }}
+  {{- end }}
 
 {{- end }}

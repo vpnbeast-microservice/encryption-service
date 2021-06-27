@@ -24,39 +24,14 @@ spec:
       containers:
         - name: {{ .Values.deployment.name | quote }}
           image: {{ .Values.deployment.image | quote }}
+          {{- if .Values.deployment.variables }}
           env:
-            - name: SERVER_PORT
-              value: {{ .Values.deployment.serverPort }}
-            - name: METRICS_PORT
-              value: { { .Values.deployment.metricsPort } }
-            - name: READ_TIMEOUT_SECONDS
-              value: {{ .Values.deployment.environment.readTimeoutSeconds }}
-            - name: WRITE_TIMEOUT_SECONDS
-              value: { { .Values.deployment.environment.writeTimeoutSeconds } }
-            - name: TZ
-              value: {{ .Values.deployment.environment.timezone | quote }}
+          {{- toYaml .Values.deployment.variables | nindent 12 }}
+          {{- end }}
+          {{- if .Values.deployment.ports }}
           ports:
-            - containerPort: {{ .Values.deployment.serverPort }}
-              name: server-port
-            - containerPort: { { .Values.deployment.metricsPort } }
-              name: metrics-port
-          livenessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: {{ .Values.deployment.managementEndpoint }}
-              port: {{ .Values.deployment.serverPort }}
-              scheme: HTTP
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 10
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: {{ .Values.deployment.managementEndpoint }}
-              port: {{ .Values.deployment.serverPort }}
-              scheme: HTTP
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 10
+          {{- toYaml .Values.deployment.ports | nindent 12 }}
+          {{- end }}
+          {{- if .Values.deployment.probes -}}
+          {{- toYaml .Values.deployment.probes | nindent 10 }}
+          {{- end -}}

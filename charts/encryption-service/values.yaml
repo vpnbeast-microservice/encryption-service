@@ -4,14 +4,51 @@ deployment:
   name: encryption-service
   image: vpnbeast/encryption-service:1.0.25
   replicaCount: 1
-  serverPort: 8085
-  metricsPort: 8086
-  managementEndpoint: /health/ping
-  ingressEndpoint: /encryption-service
-  environment:
-    timezone: Europe/Istanbul
-    readTimeoutSeconds: 10
-    writeTimeoutSeconds: 10
+  ports:
+    - containerPort: 8085
+      name: server-port
+    - containerPort: 8086
+      name: metric-port
+  variables:
+    - name: TZ
+      value: Europe/Istanbul
+  probes:
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /health/ping
+        port: 8085
+        scheme: HTTP
+      initialDelaySeconds: 20
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 10
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /health/ping
+        port: 8085
+        scheme: HTTP
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 10
+
+service:
+  ports:
+    - name: server-port
+      port: 8085
+      targetPort: 8085
+    - name: metric-port
+      port: 8086
+      targetPort: 8086
 
 ingress:
   enabled: false
+  rules:
+    - http:
+        paths:
+          - path: /encryption-service(/|$)(.*)
+            backend:
+              serviceName: encryption-service
+              servicePort: 8085
