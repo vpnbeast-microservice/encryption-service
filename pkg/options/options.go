@@ -37,10 +37,10 @@ type EncryptionServiceOptions struct {
 	ServerPort          int    `env:"SERVER_PORT"`
 	MetricsPort         int    `env:"METRICS_PORT"`
 	MetricsEndpoint     string `env:"METRICS_ENDPOINT"`
-	WriteTimeoutSeconds int	   `env:"WRITE_TIMEOUT_SECONDS"`
+	WriteTimeoutSeconds int    `env:"WRITE_TIMEOUT_SECONDS"`
 	ReadTimeoutSeconds  int    `env:"READ_TIMEOUT_SECONDS"`
 	// encryption related config
-	Secret string			   `env:"SECRET"`
+	Secret string `env:"SECRET"`
 }
 
 // initOptions initializes EncryptionServiceOptions while reading environment values, sets default values if not specified
