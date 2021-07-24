@@ -1,0 +1,10 @@
+---
+### Unit testing properties ###
+
+encryption-service:
+  serverPort: 8085
+  metricsPort: 8086
+  metricsEndpoint: /metrics
+  writeTimeoutSeconds: 10
+  readTimeoutSeconds: 10
+  secret: passphrasewhichneedstobe32bytes!

@@ -57,6 +57,8 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
       - name: Test
+        env:
+          ACTIVE_PROFILE: unit-test
         run: make test
 
   test-cache:
@@ -80,6 +82,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
       - name: Test
+        env:
+          ACTIVE_PROFILE: unit-test
         run: make test
 
   build:

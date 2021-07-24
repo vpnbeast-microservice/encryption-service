@@ -6,8 +6,10 @@ require (
 	github.com/golang/gddo v0.0.0-20210115222349-20d68f94ee1f
 	github.com/gorilla/mux v1.8.0
 	github.com/prometheus/client_golang v1.11.0
-	go.uber.org/atomic v1.8.0 // indirect
+	github.com/spf13/viper v1.8.1
+	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.18.1
-	golang.org/x/tools v0.0.0-20200103221440-774c71fcf114 // indirect
+	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
+	golang.org/x/text v0.3.6 // indirect
 )

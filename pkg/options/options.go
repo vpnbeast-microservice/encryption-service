@@ -2,9 +2,10 @@ package options
 
 import (
 	"encryption-service/pkg/logging"
+	"fmt"
+	"github.com/spf13/viper"
 	"go.uber.org/zap"
-	"os"
-	"strconv"
+	"net/http"
 )
 
 var (
@@ -15,7 +16,10 @@ var (
 func init() {
 	logger = logging.GetLogger()
 	opts = newEncryptionServiceOptions()
-	opts.initOptions()
+	err := opts.initOptions()
+	if err != nil {
+		logger.Fatal("fatal error occured while initializing options", zap.Error(err))
+	}
 }
 
 // GetEncryptionServiceOptions returns the initialized EncryptionServiceOptions
@@ -30,49 +34,57 @@ func newEncryptionServiceOptions() *EncryptionServiceOptions {
 
 type EncryptionServiceOptions struct {
 	// web server related config
-	ServerPort          int
-	MetricsPort         int
-	MetricsEndpoint     string
-	WriteTimeoutSeconds int
-	ReadTimeoutSeconds  int
+	ServerPort          int    `env:"SERVER_PORT"`
+	MetricsPort         int    `env:"METRICS_PORT"`
+	MetricsEndpoint     string `env:"METRICS_ENDPOINT"`
+	WriteTimeoutSeconds int	   `env:"WRITE_TIMEOUT_SECONDS"`
+	ReadTimeoutSeconds  int    `env:"READ_TIMEOUT_SECONDS"`
 	// encryption related config
-	Secret string
+	Secret string			   `env:"SECRET"`
 }
 
 // initOptions initializes EncryptionServiceOptions while reading environment values, sets default values if not specified
-func (eso *EncryptionServiceOptions) initOptions() {
-	eso.ServerPort = getIntEnv("SERVER_PORT", 8085)
-	eso.MetricsPort = getIntEnv("METRICS_PORT", 8086)
-	eso.WriteTimeoutSeconds = getIntEnv("WRITE_TIMEOUT_SECONDS", 10)
-	eso.ReadTimeoutSeconds = getIntEnv("READ_TIMEOUT_SECONDS", 10)
-	eso.MetricsEndpoint = getStringEnv("METRICS_ENDPOINT", "/metrics")
-	eso.Secret = getStringEnv("SECRET", "passphrasewhichneedstobe32bytes!")
-}
+func (eso *EncryptionServiceOptions) initOptions() error {
+	activeProfile := getStringEnv("ACTIVE_PROFILE", "local")
+	appName := getStringEnv("APP_NAME", "encryption-service")
+	if activeProfile == "unit-test" {
+		logger.Info("active profile is unit-test, reading configuration from static file")
+		// TODO: better approach for that?
+		viper.AddConfigPath("./config")
+		viper.SetConfigName("unit_test")
+		viper.SetConfigType("yaml")
+		if err := viper.ReadInConfig(); err != nil {
+			return err
+		}
+	} else {
+		configHost := getStringEnv("CONFIG_SERVER_HOST", "localhost")
+		configPort := getIntEnv("CONFIG_SERVER_PORT", 8888)
+		logger.Info("loading configuration from remote server", zap.String("host", configHost),
+			zap.Int("port", configPort), zap.String("appName", appName),
+			zap.String("activeProfile", activeProfile))
+		confAddr := fmt.Sprintf("http://%s:%d/%s-%s.yaml", configHost, configPort, appName, activeProfile)
+		resp, err := http.Get(confAddr)
+		if err != nil {
+			return err
+		}
 
-// getStringEnv gets the specific environment variables with default value, returns default value if variable not set
-func getStringEnv(key, defaultValue string) string {
-	value := os.Getenv(key)
-	if len(value) == 0 {
-		return defaultValue
-	}
-	return value
-}
+		defer func() {
+			err := resp.Body.Close()
+			if err != nil {
+				panic(err)
+			}
+		}()
 
-// getIntEnv gets the specific environment variables with default value, returns default value if variable not set
-func getIntEnv(key string, defaultValue int) int {
-	value := os.Getenv(key)
-	if len(value) == 0 {
-		return defaultValue
+		viper.SetConfigName("application")
+		viper.SetConfigType("yaml")
+		if err = viper.ReadConfig(resp.Body); err != nil {
+			return err
+		}
 	}
-	return convertStringToInt(value)
-}
 
-func convertStringToInt(s string) int {
-	i, err := strconv.Atoi(s)
-	if err != nil {
-		logger.Warn("an error occurred while converting from string to int. Setting it as zero",
-			zap.String("error", err.Error()))
-		i = 0
+	if err := unmarshalConfig(appName, eso); err != nil {
+		return err
 	}
-	return i
+
+	return nil
 }
