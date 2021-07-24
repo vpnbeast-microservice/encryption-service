@@ -50,7 +50,7 @@ func (eso *EncryptionServiceOptions) initOptions() error {
 	if activeProfile == "unit-test" {
 		logger.Info("active profile is unit-test, reading configuration from static file")
 		// TODO: better approach for that?
-		viper.AddConfigPath("./config")
+		viper.AddConfigPath("./../../config")
 		viper.SetConfigName("unit_test")
 		viper.SetConfigType("yaml")
 		if err := viper.ReadInConfig(); err != nil {
