@@ -12,6 +12,8 @@ deployment:
   variables:
     - name: TZ
       value: Europe/Istanbul
+    - name: ACTIVE_PROFILE
+      value: prod
   probes:
     livenessProbe:
       failureThreshold: 3
