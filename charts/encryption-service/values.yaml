@@ -2,7 +2,7 @@
 
 deployment:
   name: encryption-service
-  image: vpnbeast/encryption-service:1.0.30
+  image: vpnbeast/encryption-service:1.0.31
   replicaCount: 1
   ports:
     - containerPort: 8085
