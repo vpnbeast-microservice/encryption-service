@@ -1,10 +1,10 @@
 package web
 
 import (
-	"encryption-service/pkg/logging"
 	"encryption-service/pkg/options"
 	"fmt"
 	"github.com/gorilla/mux"
+	commons "github.com/vpnbeast/golang-commons"
 	"go.uber.org/zap"
 	"net/http"
 	"time"
@@ -16,7 +16,7 @@ var (
 )
 
 func init() {
-	logger = logging.GetLogger()
+	logger = commons.GetLogger()
 	opts = options.GetEncryptionServiceOptions()
 }
 

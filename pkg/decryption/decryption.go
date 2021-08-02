@@ -4,8 +4,8 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/hex"
-	"encryption-service/pkg/logging"
 	"encryption-service/pkg/options"
+	commons "github.com/vpnbeast/golang-commons"
 	"go.uber.org/zap"
 )
 
@@ -15,7 +15,7 @@ var (
 )
 
 func init() {
-	logger = logging.GetLogger()
+	logger = commons.GetLogger()
 	opts = options.GetEncryptionServiceOptions()
 }
 

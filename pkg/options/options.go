@@ -1,9 +1,9 @@
 package options
 
 import (
-	"encryption-service/pkg/logging"
 	"fmt"
 	"github.com/spf13/viper"
+	commons "github.com/vpnbeast/golang-commons"
 	"go.uber.org/zap"
 	"net/http"
 )
@@ -14,7 +14,7 @@ var (
 )
 
 func init() {
-	logger = logging.GetLogger()
+	logger = commons.GetLogger()
 	opts = newEncryptionServiceOptions()
 	err := opts.initOptions()
 	if err != nil {
@@ -45,8 +45,8 @@ type EncryptionServiceOptions struct {
 
 // initOptions initializes EncryptionServiceOptions while reading environment values, sets default values if not specified
 func (eso *EncryptionServiceOptions) initOptions() error {
-	activeProfile := getStringEnv("ACTIVE_PROFILE", "local")
-	appName := getStringEnv("APP_NAME", "encryption-service")
+	activeProfile := commons.GetStringEnv("ACTIVE_PROFILE", "local")
+	appName := commons.GetStringEnv("APP_NAME", "encryption-service")
 	if activeProfile == "unit-test" {
 		logger.Info("active profile is unit-test, reading configuration from static file")
 		// TODO: better approach for that?
@@ -57,8 +57,8 @@ func (eso *EncryptionServiceOptions) initOptions() error {
 			return err
 		}
 	} else {
-		configHost := getStringEnv("CONFIG_SERVER_HOST", "localhost")
-		configPort := getIntEnv("CONFIG_SERVER_PORT", 8888)
+		configHost := commons.GetStringEnv("CONFIG_SERVER_HOST", "localhost")
+		configPort := commons.GetIntEnv("CONFIG_SERVER_PORT", 8888)
 		logger.Info("loading configuration from remote server", zap.String("host", configHost),
 			zap.Int("port", configPort), zap.String("appName", appName),
 			zap.String("activeProfile", activeProfile))
@@ -82,7 +82,7 @@ func (eso *EncryptionServiceOptions) initOptions() error {
 		}
 	}
 
-	if err := unmarshalConfig(appName, eso); err != nil {
+	if err := commons.UnmarshalConfig(appName, eso); err != nil {
 		return err
 	}
 
