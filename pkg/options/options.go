@@ -47,6 +47,7 @@ type EncryptionServiceOptions struct {
 func (eso *EncryptionServiceOptions) initOptions() error {
 	activeProfile := commons.GetStringEnv("ACTIVE_PROFILE", "local")
 	appName := commons.GetStringEnv("APP_NAME", "encryption-service")
+	// TODO: below if/else logic can be implemented using library to decrease duplicate code across other projects?
 	if activeProfile == "unit-test" {
 		logger.Info("active profile is unit-test, reading configuration from static file")
 		// TODO: better approach for that?
