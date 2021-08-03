@@ -319,6 +319,8 @@ github.com/vpnbeast/golang-commons v0.0.1 h1:K9kQYm7z9bw+yFAzlB4+3LbV7z7ZOVE84/3
 github.com/vpnbeast/golang-commons v0.0.1/go.mod h1:OxS6IJvoUn0HR7PPJulk1CCwDlxmG/p8X7LXLUB9Eog=
 github.com/vpnbeast/golang-commons v0.0.3 h1:DH7YF0XkRLe8vjmzwAmB5/fvNY092lrdq00zb1pYkM0=
 github.com/vpnbeast/golang-commons v0.0.3/go.mod h1:OxS6IJvoUn0HR7PPJulk1CCwDlxmG/p8X7LXLUB9Eog=
+github.com/vpnbeast/golang-commons v0.0.4 h1:8o8rU/vnt9UQGl2VhUx8ZS254WptAgRw9jmDG8+zWRw=
+github.com/vpnbeast/golang-commons v0.0.4/go.mod h1:OxS6IJvoUn0HR7PPJulk1CCwDlxmG/p8X7LXLUB9Eog=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
