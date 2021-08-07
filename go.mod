@@ -8,8 +8,7 @@ require (
 	github.com/prometheus/client_golang v1.11.0
 	github.com/prometheus/common v0.30.0 // indirect
 	github.com/prometheus/procfs v0.7.2 // indirect
-	github.com/vpnbeast/golang-commons v0.0.7
+	github.com/vpnbeast/golang-commons v0.0.9
 	go.uber.org/zap v1.18.1
-	golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 )
