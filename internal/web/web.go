@@ -1,7 +1,7 @@
 package web
 
 import (
-	"encryption-service/pkg/options"
+	"encryption-service/internal/options"
 	"fmt"
 	"github.com/gorilla/mux"
 	commons "github.com/vpnbeast/golang-commons"

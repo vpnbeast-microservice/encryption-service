@@ -1,7 +1,7 @@
 package validation
 
 import (
-	"encryption-service/pkg/decryption"
+	"encryption-service/internal/decryption"
 )
 
 // Compare compares plainText and encryptedText

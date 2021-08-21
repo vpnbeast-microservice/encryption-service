@@ -2,9 +2,9 @@ package web
 
 import (
 	"encoding/json"
-	"encryption-service/pkg/decryption"
-	"encryption-service/pkg/encryption"
-	"encryption-service/pkg/validation"
+	"encryption-service/internal/decryption"
+	"encryption-service/internal/encryption"
+	"encryption-service/internal/validation"
 	"errors"
 	"go.uber.org/zap"
 	"net/http"

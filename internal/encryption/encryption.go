@@ -5,7 +5,7 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/hex"
-	"encryption-service/pkg/options"
+	"encryption-service/internal/options"
 	"fmt"
 	commons "github.com/vpnbeast/golang-commons"
 	"go.uber.org/zap"

@@ -4,7 +4,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/hex"
-	"encryption-service/pkg/options"
+	"encryption-service/internal/options"
 	commons "github.com/vpnbeast/golang-commons"
 	"go.uber.org/zap"
 )

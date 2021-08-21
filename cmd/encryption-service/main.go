@@ -1,9 +1,9 @@
 package main
 
 import (
-	"encryption-service/pkg/metrics"
-	"encryption-service/pkg/options"
-	"encryption-service/pkg/web"
+	"encryption-service/internal/metrics"
+	"encryption-service/internal/options"
+	"encryption-service/internal/web"
 	"github.com/gorilla/mux"
 	commons "github.com/vpnbeast/golang-commons"
 	"go.uber.org/zap"
