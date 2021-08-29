@@ -13,7 +13,8 @@ encryption-service requires [vpnbeast/config-service](https://github.com/vpnbeas
 are stored at [vpnbeast/properties](https://github.com/vpnbeast/properties).
 
 ## Configuration
-This project fetches the configuration from [config-service](https://github.com/vpnbeast/config-service) and [config-server](https://github.com/vpnbeast/config-service) fetches from a private repository on Github. But you can still override them with environment variables:
+This project fetches the configuration from [config-service](https://github.com/vpnbeast/config-service).
+But you can still override them with environment variables:
 ```
 SERVER_PORT             Port number of web server
 METRICS_PORT            Port number to expose Prometheus metrics
