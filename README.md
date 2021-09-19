@@ -3,6 +3,8 @@
 [![Docker pulls](https://img.shields.io/docker/pulls/vpnbeast/encryption-service)](https://hub.docker.com/r/vpnbeast/encryption-service/)
 [![Go Report Card](https://goreportcard.com/badge/github.com/vpnbeast/encryption-service)](https://goreportcard.com/report/github.com/vpnbeast/encryption-service)
 [![codecov](https://codecov.io/gh/vpnbeast/encryption-service/branch/master/graph/badge.svg)](https://codecov.io/gh/vpnbeast/encryption-service)
+[![Go version](https://img.shields.io/github/go-mod/go-version/vpnbeast/encryption-service)](https://github.com/vpnbeast/encryption-service)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This is a web server created for encrypting strings based on [AES-256](https://www.solarwindsmsp.com/blog/aes-256-encryption-algorithm)
 and returns the encrypted response as `JSON`. This service also has capability of checking the clear and encrypted strings,
@@ -28,3 +30,6 @@ This project requires below tools while developing:
 - [Golang 1.16](https://golang.org/doc/go1.16)
 - [pre-commit](https://pre-commit.com/)
 - [golangci-lint](https://golangci-lint.run/usage/install/) - required by [pre-commit](https://pre-commit.com/)
+
+## License
+Apache License 2.0
