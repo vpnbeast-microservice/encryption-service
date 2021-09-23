@@ -15,12 +15,6 @@ repos:
       - id: go-imports
       - id: validate-toml
       - id: golangci-lint
+      - id: go-unit-tests
       - id: go-build
       - id: go-mod-tidy
-
-  - repo: local
-    hooks:
-      - id: go-unit-test
-        name: golang unit testing
-        language: system
-        entry: bash -c "ACTIVE_PROFILE=unit-test go test ./..."
