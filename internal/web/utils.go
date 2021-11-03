@@ -55,7 +55,7 @@ func decodeJSONBody(w http.ResponseWriter, r *http.Request, dst interface{}) err
 		// is an open issue regarding this at
 		// https://github.com/golang/go/issues/25956.
 		case errors.Is(err, io.ErrUnexpectedEOF):
-			msg := fmt.Sprintf("Request body contains badly-formed JSON")
+			msg := "Request body contains badly-formed JSON"
 			return &malformedRequest{status: http.StatusBadRequest, msg: msg}
 
 		// Catch any type errors, like trying to assign a string in the
@@ -63,7 +63,8 @@ func decodeJSONBody(w http.ResponseWriter, r *http.Request, dst interface{}) err
 		// interpolate the relevant field name and position into the error
 		// message to make it easier for the client to fix.
 		case errors.As(err, &unmarshalTypeError):
-			msg := fmt.Sprintf("Request body contains an invalid value for the %q field (at position %d)", unmarshalTypeError.Field, unmarshalTypeError.Offset)
+			msg := fmt.Sprintf("Request body contains an invalid value for the %q field (at position %d)",
+				unmarshalTypeError.Field, unmarshalTypeError.Offset)
 			return &malformedRequest{status: http.StatusBadRequest, msg: msg}
 
 		// Catch the error caused by extra unexpected fields in the request
