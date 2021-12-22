@@ -10,11 +10,18 @@ import (
 	"net/http"
 )
 
+const (
+	ContentType        = "application/json"
+	ErrMarshalResponse = "an error occurred while marshaling response"
+	ErrDecodeBody      = "an error occurred while decoding json body"
+	ErrWriteResponse   = "an error occurred while writing response"
+)
+
 func encryptHandler(w http.ResponseWriter, r *http.Request) {
 	var request encryptRequest
 	err := decodeJSONBody(w, r, &request)
 	if err != nil {
-		logger.Error("an error occurred while decoding json body", zap.String("error", err.Error()))
+		logger.Error(ErrDecodeBody, zap.String("error", err.Error()))
 		var mr *malformedRequest
 		if errors.As(err, &mr) {
 			http.Error(w, mr.msg, mr.status)
@@ -31,15 +38,15 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 
 	responseBytes, err := json.Marshal(response)
 	if err != nil {
-		logger.Error("an error occurred while marshaling response", zap.String("error", err.Error()))
+		logger.Error(ErrMarshalResponse, zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", ContentType)
 	_, err = w.Write(responseBytes)
 	if err != nil {
-		logger.Error("an error occurred while writing response", zap.String("error", err.Error()))
+		logger.Error(ErrWriteResponse, zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -49,7 +56,7 @@ func decryptHandler(w http.ResponseWriter, r *http.Request) {
 	var request decryptRequest
 	err := decodeJSONBody(w, r, &request)
 	if err != nil {
-		logger.Error("an error occurred while decoding json body", zap.String("error", err.Error()))
+		logger.Error(ErrDecodeBody, zap.String("error", err.Error()))
 		var mr *malformedRequest
 		if errors.As(err, &mr) {
 			http.Error(w, mr.msg, mr.status)
@@ -66,15 +73,15 @@ func decryptHandler(w http.ResponseWriter, r *http.Request) {
 
 	responseBytes, err := json.Marshal(response)
 	if err != nil {
-		logger.Error("an error occurred while marshaling response", zap.String("error", err.Error()))
+		logger.Error(ErrMarshalResponse, zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", ContentType)
 	_, err = w.Write(responseBytes)
 	if err != nil {
-		logger.Error("an error occurred while writing response", zap.String("error", err.Error()))
+		logger.Error(ErrWriteResponse, zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -84,7 +91,7 @@ func checkHandler(w http.ResponseWriter, r *http.Request) {
 	var request checkRequest
 	err := decodeJSONBody(w, r, &request)
 	if err != nil {
-		logger.Error("an error occurred while decoding json body", zap.String("error", err.Error()))
+		logger.Error(ErrDecodeBody, zap.String("error", err.Error()))
 		var mr *malformedRequest
 		if errors.As(err, &mr) {
 			http.Error(w, mr.msg, mr.status)
@@ -101,15 +108,15 @@ func checkHandler(w http.ResponseWriter, r *http.Request) {
 
 	responseBytes, err := json.Marshal(response)
 	if err != nil {
-		logger.Error("an error occurred while marshaling response", zap.String("error", err.Error()))
+		logger.Error(ErrMarshalResponse, zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", ContentType)
 	_, err = w.Write(responseBytes)
 	if err != nil {
-		logger.Error("an error occurred while writing response", zap.String("error", err.Error()))
+		logger.Error(ErrWriteResponse, zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -118,7 +125,7 @@ func checkHandler(w http.ResponseWriter, r *http.Request) {
 func pingHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := w.Write([]byte("pong"))
 	if err != nil {
-		logger.Error("an error occurred while writing response", zap.String("error", err.Error()))
+		logger.Error(ErrWriteResponse, zap.String("error", err.Error()))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
