@@ -41,6 +41,7 @@ After installed [pre-commit](https://pre-commit.com/), make sure that you've com
   ```python
   # custom variable definition for local development
   os.environ["ACTIVE_PROFILE"] = "unit-test"
+  os.environ["CONFIG_PATH"] = "./../../"
   ```
 
 ## License
