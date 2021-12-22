@@ -122,6 +122,8 @@ jobs:
           go-version: 1.16.x
       - name: Coverage Test
         run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+        env:
+          ACTIVE_PROFILE: unit-test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
