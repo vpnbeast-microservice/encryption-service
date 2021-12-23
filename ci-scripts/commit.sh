@@ -14,6 +14,7 @@ function git_commit_and_push() {
     git push "${PUSH_URL}" HEAD:"${BRANCH}" --force --follow-tags
 }
 
+
 set -ex
 PROJECT_NAME=encryption-service
 BRANCH=master
