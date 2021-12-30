@@ -176,7 +176,7 @@ jobs:
           git config --global user.email info@thevpnbeast.com
           git --no-pager diff
           git add --all
-          git remote set-url origin https://x-access-token:${{ secrets.ACTIONS_SECRET }}@github.com/vpnbeast/encryption-service
+          git remote set-url origin https://vpnbeast-ci:${{ secrets.ACTIONS_SECRET }}@github.com/vpnbeast/encryption-service.git
           git commit -am "[ci-skip] version v${{ env.release_version }} released"
           git tag -a "v${{ env.release_version }}" -m "v${{ env.release_version }} tagged"
           git status
