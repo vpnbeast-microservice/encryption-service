@@ -132,8 +132,11 @@ jobs:
 
   build:
     needs:
-      - coverage
-      - sonarcloud
+      - lint
+      - vet
+      - ineffassign
+      - test
+      - codeql
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -151,6 +154,8 @@ jobs:
 
   dockerize_and_commit:
     needs:
+      - coverage
+      - sonarcloud
       - build
     runs-on: ubuntu-latest
     steps:
@@ -178,7 +183,7 @@ jobs:
           git --no-pager diff
           git add --all
           git remote add github "https://vpnbeast-ci:${{ secrets.ACTIONS_SECRET }}@github.com/vpnbeast/encryption-service.git"
-          git commit -am "[ci-skip] version v${{ env.release_version }} released"
+          git commit -am "[skip ci] version v${{ env.release_version }} released"
           git tag -a "v${{ env.release_version }}" -m "v${{ env.release_version }} tagged"
           git status
           git push github HEAD:master --force --follow-tags
