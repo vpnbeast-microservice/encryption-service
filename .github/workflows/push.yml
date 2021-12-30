@@ -7,163 +7,163 @@ on:
       - master
 
 jobs:
-#  lint:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#      - name: Install Go
-#        uses: actions/setup-go@v2
-#        with:
-#          go-version: 1.16.x
-#      - name: Lint
-#        run: |
-#          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.42.1
-#          make lint
-#
-#  vet:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#      - name: Install Go
-#        uses: actions/setup-go@v2
-#        with:
-#          go-version: 1.16.x
-#      - name: Vet
-#        run: make vet
-#
-#  ineffassign:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#      - name: Install Go
-#        uses: actions/setup-go@v2
-#        with:
-#          go-version: 1.16.x
-#      - name: Lint
-#        run: make ineffassign
-#
-#  test:
-#    strategy:
-#      matrix:
-#        os: [ubuntu-latest, macos-latest]
-#    runs-on: ${{ matrix.os }}
-#    steps:
-#      - name: Install Go
-#        uses: actions/setup-go@v2
-#        with:
-#          go-version: 1.16.x
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#      - name: Test
-#        env:
-#          ACTIVE_PROFILE: unit-test
-#        run: make test
-#
-#  codeql:
-#    runs-on: ubuntu-latest
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        language: [ 'go' ]
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#      - name: Initialize CodeQL
-#        uses: github/codeql-action/init@v1
-#        with:
-#          languages: ${{ matrix.language }}
-#      # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
-#      # If this step fails, then you should remove it and run the build manually (see below)
-#      - name: Autobuild
-#        uses: github/codeql-action/autobuild@v1
-#      - name: Perform CodeQL Analysis
-#        uses: github/codeql-action/analyze@v1
-#
-#  coverage:
-#    runs-on: ubuntu-latest
-#    needs:
-#      - lint
-#      - vet
-#      - ineffassign
-#      - test
-#      - codeql
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#      - name: Install Go
-#        uses: actions/setup-go@v2
-#        with:
-#          go-version: 1.16.x
-#      - name: Coverage Test
-#        env:
-#          ACTIVE_PROFILE: unit-test
-#        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
-#      - name: Coverage Upload
-#        run: bash <(curl -s https://codecov.io/bash)
-#
-#  sonarcloud:
-#    runs-on: ubuntu-latest
-#    needs:
-#      - lint
-#      - vet
-#      - ineffassign
-#      - test
-#      - codeql
-#    steps:
-#      - uses: actions/checkout@v2
-#        with:
-#          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-#      - name: Install Go
-#        uses: actions/setup-go@v2
-#        with:
-#          go-version: 1.16.x
-#      - name: Coverage Test
-#        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
-#        env:
-#          ACTIVE_PROFILE: unit-test
-#      - name: SonarCloud Scan
-#        uses: SonarSource/sonarcloud-github-action@master
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#
-#  build:
-#    needs:
-#      - lint
-#      - vet
-#      - ineffassign
-#      - test
-#      - codeql
-#    strategy:
-#      matrix:
-#        os: [ubuntu-latest, macos-latest]
-#    runs-on: ${{ matrix.os }}
-#    steps:
-#      - name: Install Go
-#        uses: actions/setup-go@v2
-#        with:
-#          go-version: 1.16.x
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#      - name: Test
-#        run: make build
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Lint
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.42.1
+          make lint
 
+  vet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Vet
+        run: make vet
 
-  dockerize_and_commit:
-#    needs:
-#      - coverage
-#      - sonarcloud
-#      - build
+  ineffassign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Lint
+        run: make ineffassign
+
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Test
+        env:
+          ACTIVE_PROFILE: unit-test
+        run: make test
+
+  codeql:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'go' ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+      # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
+      # If this step fails, then you should remove it and run the build manually (see below)
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs:
+      - lint
+      - vet
+      - ineffassign
+      - test
+      - codeql
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Coverage Test
+        env:
+          ACTIVE_PROFILE: unit-test
+        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+      - name: Coverage Upload
+        run: bash <(curl -s https://codecov.io/bash)
+
+  sonarcloud:
+    runs-on: ubuntu-latest
+    needs:
+      - lint
+      - vet
+      - ineffassign
+      - test
+      - codeql
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Coverage Test
+        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+        env:
+          ACTIVE_PROFILE: unit-test
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  build:
+    needs:
+      - lint
+      - vet
+      - ineffassign
+      - test
+      - codeql
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Test
+        run: make build
+
+  release:
+    needs:
+      - coverage
+      - sonarcloud
+      - build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Set new version
+        env:
+          CHART_NAME: encryption-service
         run: |
-          CHART_NAME=encryption-service
           CURRENT_VERSION=$(grep RELEASE_VERSION version.properties | cut -d "=" -f2)
           VERSION_MAJOR=$(echo "$CURRENT_VERSION" | cut -d "." -f 1)
           VERSION_MINOR=$(echo "$CURRENT_VERSION" | cut -d "." -f 2)
@@ -173,27 +173,25 @@ jobs:
           sed -i "s/${CURRENT_VERSION}/${RELEASE_VERSION}/g" version.properties
           sed -i "s/${CURRENT_VERSION}/${RELEASE_VERSION}/g" charts/"${CHART_NAME}"/Chart.yaml
           sed -i "s/${CURRENT_VERSION}/${RELEASE_VERSION}/g" charts/"${CHART_NAME}"/values.yaml
-          echo "CURRENT_VERSION = ${CURRENT_VERSION}"
-          echo "RELEASE_VERSION = ${RELEASE_VERSION}"
-#      - name: Set release_version variable
-#        run: echo "release_version=$(grep RELEASE_VERSION version.properties | cut -d '=' -f2)" >> $GITHUB_ENV
-#      - name: Build the Docker image
-#        run: docker build . --file Dockerfile --tag vpnbeast/encryption-service:${{ env.release_version }}
-#      - name: Publish to Registry
-#        uses: elgohr/Publish-Docker-Github-Action@master
-#        with:
-#          name: vpnbeast/encryption-service
-#          tags: "latest,${{ env.release_version }}"
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
-#      - name: Commit changes to Git repo
-#        run: |
-#          git config --global user.name vpnbeast-ci
-#          git config --global user.email info@thevpnbeast.com
-#          git --no-pager diff
-#          git add --all
-#          git remote add github "https://vpnbeast-ci:${{ secrets.ACTIONS_SECRET }}@github.com/vpnbeast/encryption-service.git"
-#          git commit -am "[skip ci] version v${{ env.release_version }} released"
-#          git tag -a "v${{ env.release_version }}" -m "v${{ env.release_version }} tagged"
-#          git status
-#          git push github HEAD:master --force --follow-tags
+      - name: Set release_version variable
+        run: echo "release_version=$(grep RELEASE_VERSION version.properties | cut -d '=' -f2)" >> $GITHUB_ENV
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag vpnbeast/encryption-service:${{ env.release_version }}
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: vpnbeast/encryption-service
+          tags: "latest,${{ env.release_version }}"
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Commit changes to Git repo
+        run: |
+          git config --global user.name vpnbeast-ci
+          git config --global user.email info@thevpnbeast.com
+          git --no-pager diff
+          git add --all
+          git remote add github "https://vpnbeast-ci:${{ secrets.ACTIONS_SECRET }}@github.com/vpnbeast/encryption-service.git"
+          git commit -am "[skip ci] version v${{ env.release_version }} released"
+          git tag -a "v${{ env.release_version }}" -m "v${{ env.release_version }} tagged"
+          git status
+          git push github HEAD:master --force --follow-tags
