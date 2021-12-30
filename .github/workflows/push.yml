@@ -155,7 +155,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
       - name: Set tag.sh executable
         run: chmod +x ci-scripts/tag.sh
       - name: Run tag.sh
