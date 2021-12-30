@@ -181,4 +181,4 @@ jobs:
           git commit -am "[ci-skip] version v${{ env.release_version }} released"
           git tag -a "v${{ env.release_version }}" -m "v${{ env.release_version }} tagged"
           git status
-          git push --force --follow-tags
+          git push origin master --force --follow-tags
