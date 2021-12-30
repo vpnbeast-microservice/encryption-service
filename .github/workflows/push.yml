@@ -165,11 +165,10 @@ jobs:
         run: |
           CHART_NAME=encryption-service
           CURRENT_VERSION=$(grep RELEASE_VERSION version.properties | cut -d "=" -f2)
-          local version_major, version_minor, version_patch
-          version_major=$(echo "$CURRENT_VERSION" | cut -d "." -f 1)
-          version_minor=$(echo "$CURRENT_VERSION" | cut -d "." -f 2)
-          version_patch=$(echo "$CURRENT_VERSION" | cut -d "." -f 3)
-          version_patch=$(expr "${version_patch}" + 1)
+          VERSION_MAJOR=$(echo "$CURRENT_VERSION" | cut -d "." -f 1)
+          VERSION_MINOR=$(echo "$CURRENT_VERSION" | cut -d "." -f 2)
+          VERSION_PATCH=$(echo "$CURRENT_VERSION" | cut -d "." -f 3)
+          VERSION_PATCH=$(expr "${VERSION_PATCH}" + 1)
           RELEASE_VERSION="${version_major}.${version_minor}.${version_patch}"
           sed -i "s/${CURRENT_VERSION}/${RELEASE_VERSION}/g" version.properties
           sed -i "s/${CURRENT_VERSION}/${RELEASE_VERSION}/g" charts/"${CHART_NAME}"/Chart.yaml
