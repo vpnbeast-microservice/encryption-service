@@ -169,7 +169,7 @@ jobs:
           VERSION_MINOR=$(echo "$CURRENT_VERSION" | cut -d "." -f 2)
           VERSION_PATCH=$(echo "$CURRENT_VERSION" | cut -d "." -f 3)
           VERSION_PATCH=$(expr "${VERSION_PATCH}" + 1)
-          RELEASE_VERSION="${version_major}.${version_minor}.${version_patch}"
+          RELEASE_VERSION="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
           sed -i "s/${CURRENT_VERSION}/${RELEASE_VERSION}/g" version.properties
           sed -i "s/${CURRENT_VERSION}/${RELEASE_VERSION}/g" charts/"${CHART_NAME}"/Chart.yaml
           sed -i "s/${CURRENT_VERSION}/${RELEASE_VERSION}/g" charts/"${CHART_NAME}"/values.yaml
