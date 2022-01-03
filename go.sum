@@ -386,8 +386,8 @@ github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/subosito/gotenv v1.2.0 h1:Slr1R9HxAlEKefgq5jn9U+DnETlIUa6HfgEzj0g5d7s=
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
-github.com/vpnbeast/golang-commons v0.0.26 h1:DQ8l4H3vaVT58SNPPb0MEoHe0CW4f1cE786tbH4Q5K8=
-github.com/vpnbeast/golang-commons v0.0.26/go.mod h1:+hsGJym4bc9BVcbE8WjjolTmkXMnm0fX8PvF+2qq0gw=
+github.com/vpnbeast/golang-commons v0.0.29 h1:58yvxPji1fXRYRL++Ml7yBtcJcMRfR9NTmNLTaAZxRY=
+github.com/vpnbeast/golang-commons v0.0.29/go.mod h1:dhoeUabHl9BbYFeovaOQsEu36OA5TP0PcBRIFtOpPfw=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
