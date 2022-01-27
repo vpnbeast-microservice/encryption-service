@@ -15,7 +15,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16.x
+          go-version: 1.17.x
       - name: Lint
         run: |
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.42.1
@@ -29,7 +29,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16.x
+          go-version: 1.17.x
       - name: Vet
         run: make vet
 
@@ -41,7 +41,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16.x
+          go-version: 1.17.x
       - name: Lint
         run: make ineffassign
 
@@ -54,7 +54,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16.x
+          go-version: 1.17.x
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Test
@@ -64,6 +64,11 @@ jobs:
 
   codeql:
     runs-on: ubuntu-latest
+    needs:
+      - lint
+      - vet
+      - ineffassign
+      - test
     strategy:
       fail-fast: false
       matrix:
@@ -82,28 +87,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
-  coverage:
-    runs-on: ubuntu-latest
-    needs:
-      - lint
-      - vet
-      - ineffassign
-      - test
-      - codeql
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.16.x
-      - name: Coverage Test
-        env:
-          ACTIVE_PROFILE: unit-test
-        run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
-      - name: Coverage Upload
-        run: bash <(curl -s https://codecov.io/bash)
-
   sonarcloud:
     runs-on: ubuntu-latest
     needs:
@@ -111,7 +94,6 @@ jobs:
       - vet
       - ineffassign
       - test
-      - codeql
     steps:
       - uses: actions/checkout@v2
         with:
@@ -119,7 +101,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16.x
+          go-version: 1.17.x
       - name: Coverage Test
         run: go test ./... -race -coverprofile=coverage.txt -covermode=atomic
         env:
@@ -136,7 +118,6 @@ jobs:
       - vet
       - ineffassign
       - test
-      - codeql
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -145,7 +126,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16.x
+          go-version: 1.17.x
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Test
@@ -153,7 +134,7 @@ jobs:
 
   release:
     needs:
-      - coverage
+      - codeql
       - sonarcloud
       - build
     runs-on: ubuntu-latest
