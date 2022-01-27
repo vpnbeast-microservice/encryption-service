@@ -2,8 +2,11 @@
 [![CI](https://github.com/vpnbeast/encryption-service/workflows/CI/badge.svg?event=push)](https://github.com/vpnbeast/encryption-service/actions?query=workflow%3ACI)
 [![Docker pulls](https://img.shields.io/docker/pulls/vpnbeast/encryption-service)](https://hub.docker.com/r/vpnbeast/encryption-service/)
 [![Go Report Card](https://goreportcard.com/badge/github.com/vpnbeast/encryption-service)](https://goreportcard.com/report/github.com/vpnbeast/encryption-service)
-[![codecov](https://codecov.io/gh/vpnbeast/encryption-service/branch/master/graph/badge.svg)](https://codecov.io/gh/vpnbeast/encryption-service)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vpnbeast_encryption-service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vpnbeast_encryption-service)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=vpnbeast_encryption-service&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=vpnbeast_encryption-service)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=vpnbeast_encryption-service&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=vpnbeast_encryption-service)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=vpnbeast_encryption-service&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=vpnbeast_encryption-service)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=vpnbeast_encryption-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=vpnbeast_encryption-service)
 [![Go version](https://img.shields.io/github/go-mod/go-version/vpnbeast/encryption-service)](https://github.com/vpnbeast/encryption-service)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
