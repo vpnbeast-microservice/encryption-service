@@ -159,7 +159,7 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag vpnbeast/encryption-service:${{ env.release_version }}
       - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: vpnbeast/encryption-service
           tags: "latest,${{ env.release_version }}"
